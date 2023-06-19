@@ -1,6 +1,6 @@
 // Set the size of the grid
 const GRID_SIZE = 31;
-const CELL_SIZE = 10;
+const CELL_SIZE = 12;
 
 // Set starting angel coordinates
 let angelX = Math.floor(GRID_SIZE / 2); // X-coordinate of the angel
@@ -9,6 +9,8 @@ let angelY = Math.floor(GRID_SIZE / 2); // Y-coordinate of the angel
 // Create the game grid
 const canvas = document.getElementById("game-canvas");
 const ctx = canvas.getContext("2d");
+
+
 canvas.width = GRID_SIZE * CELL_SIZE;
 canvas.height = GRID_SIZE * CELL_SIZE;
 
@@ -18,10 +20,6 @@ let grid = createGrid();
 // Variables for drawing
 let isDrawing = false;
 let isSimulationRunning = false;
-
-// Game stabilization variables
-let previousStates = [];
-const STABILIZATION_THRESHOLD = 5; // Number of previous states to check for stabilization
 
 // Event listeners for drawing
 canvas.addEventListener("mousedown", startDrawing);
@@ -79,7 +77,7 @@ function updateGrid() {
     for (let i = 0; i < GRID_SIZE; i++) {
         for (let j = 0; j < GRID_SIZE; j++) {
             const neighbors = countNeighbors(i, j);
-            if (i === angelX && j === angelY) {
+            if (i === angelX && j === angelY && destructive) {
                 // Angel square remains unchanged
                 continue;
             } else if (grid[i][j]) {
@@ -92,14 +90,12 @@ function updateGrid() {
         }
     }
 
-    // Check for game stabilization
-    if (isGridStable(newGrid)) {
-        stopSimulation();
-        showGameOver();
+    let validMoves = []
+    if (angelCorners){
+        validMoves = nonCornerSquares(angelX, angelY);
+    } else {
+        validMoves = emptySquares(angelX, angelY);
     }
-
-    // Maximum moves is 8 - the neighbors
-    const validMoves = emptySquares(angelX, angelY);
 
     if (validMoves.length > 0) {
         // Choose a random valid square
@@ -132,6 +128,27 @@ function emptySquares(x, y) {
     return emptySquares;
 }
 
+function nonCornerSquares(x, y) {
+    let emptySquares = [];
+
+    let neighborY = (y + GRID_SIZE) % GRID_SIZE;
+    for (let i = -1; i <= 1; i++){
+        let neighborX = (x + i + GRID_SIZE) % GRID_SIZE;
+        if (!grid[neighborX][neighborY]) {
+            emptySquares.push([neighborX, neighborY]);
+        }
+    }
+
+    let neighborX = (x + GRID_SIZE) % GRID_SIZE;
+    for (let i = -1; i <= 1; i++){
+        let neighborY = (y + i + GRID_SIZE) % GRID_SIZE;
+        if (!grid[neighborX][neighborY]) {
+            emptySquares.push([neighborX, neighborY]);
+        }
+    }
+    return emptySquares;
+}
+
 function countNeighbors(x, y) {
     let count = 0;
     for (let i = -1; i <= 1; i++) {
@@ -140,6 +157,9 @@ function countNeighbors(x, y) {
             const neighborX = (x + i + GRID_SIZE) % GRID_SIZE;
             const neighborY = (y + j + GRID_SIZE) % GRID_SIZE;
             if (grid[neighborX][neighborY]) {
+                count++;
+            } else if (neighborX === angelX && neighborY === angelY && constructive){
+                // The angel adds to the game of life
                 count++;
             }
         }
@@ -162,23 +182,6 @@ function drawGrid() {
             }
         }
     }
-}
-
-function isGridStable(newGrid) {
-    const currentState = newGrid.flat().join('');
-    previousStates.push(currentState);
-    if (previousStates.length > STABILIZATION_THRESHOLD) {
-        previousStates.shift();
-    }
-    for (var i = 0; i < previousStates.length; i++) {
-        for (var j = i + 1; j < previousStates.length; j++) {
-            if (previousStates[i] === previousStates[j]) {
-                console.log('Repeat state found. Game over.')
-                return true; // Found a duplicate value
-            }
-        }
-    }
-    return false;
 }
 
 function showGameOver() {
@@ -223,7 +226,6 @@ function settings(){
 
 function resetGrid() {
     grid = createGrid();
-    previousStates = []; // Reset the stabilization states
     angelX = Math.floor(GRID_SIZE / 2); // X-coordinate of the angel
     angelY = Math.floor(GRID_SIZE / 2); // Y-coordinate of the angel
     settings();

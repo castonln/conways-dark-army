@@ -27,13 +27,13 @@
                     <button class="btn btn-danger" onclick="resetGrid()">Reset</button>
                 </div>
                 <hr>
-                <h2>Settings</h2>
+                <h2 class="p-2">Settings</h2>
                 <div class='justify-content-left'>
-                    <input type="checkbox" id="angel-corners-enable">
+                    <input type="checkbox" id="angel-corners-enable" onclick="settings()">
                     <label for="angel-corners-enable">Angel can't "cut corners" (4 possible moves)</label><br>
-                    <input type="radio" name="angel-type" id="destructive" checked>
+                    <input type="radio" name="angel-type" id="destructive" onclick="settings()" checked>
                     <label for="destructive">Destructive Angel</label><br>
-                    <input type="radio" name="angel-type" id="constructive">
+                    <input type="radio" name="angel-type" id="constructive" onclick="settings()">
                     <label for="constructive">Constructive Angel</label>
                     <hr>
                 </div>
@@ -43,8 +43,49 @@
             </div>
         </div>
         <div class="text-center">
-            <h2>Hints</h2>
-            <p>The devil can win. Very easily, in fact. If there is no restricted box set, the angel can be trapped in on all sides:</p>
+            <h2 class="p-2">Explanation and Reflection</h2>
+            <p><a style="font-weight: bold;" href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" target="_blank">Conway's Game of Life </a> - A living cell with less than 2 or more than 3 neighbors dies. A dead cell with 3 neighbors becomes alive.</p>
+            <p><a style="font-weight: bold;" href="https://en.wikipedia.org/wiki/Angel_problem" target="_blank">Conway's Angel Problem </a> - The angel can move a certain number of squares in any direction. The devil can block one square each time the angel moves.</p>
+            <p><span style="font-weight: bold;">Conway's Dark Army - </span> The devil commands an army of squares which play the Game of Life. The angel must evade capture by moving only one square in any direction.</p>
+            <hr>
+            <p>The devil can win. Very easily, in fact. If there are no restrictions as to where the devil may place his squares at the start of the game, the angel can be closed in on all sides.</p>
+            <div class="row justify-content-center align-items-center m-2">
+                <div class="col-md-2">
+                    <img src="img/ex2.png" class="border m-2">
+                </div>
+            </div>
+            <p>But even if that move isn't allowed, the devil can still win by setting a trap:</p>
+            <div class="row justify-content-center align-items-center m-2">
+                <div class="col-md-2">
+                    <img src="img/ex1.png" class="border m-2">
+                </div>
+                <p>Becomes...</p>
+                <div class="col-md-2">
+                    <img src="img/ex2.png" class="border m-2">
+                </div>
+            </div>
+            <p>Of course, the angel would only step inside this sort of trap voluntarily (in this demonstration, it would be a 1/5 chance), and such a move only lasts for one turn.</p>
+            <p>However, things get a bit more interesting when we restrict the angel from "cutting corners."</p>
+            <p>(The angel may only move to the green squares. The orange squares are only accessible when corners are cut.)</p>
+            <div class="row justify-content-center align-items-center m-2">
+                <div class="col-md-2">
+                    <img src="img/ex3.png" class="border m-2">
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center m-2">
+                <div class="col-md-2">
+                    <img src="img/ex4.gif" class="border m-2">
+                </div>
+            </div>
+            <p>Now the angel is trapped (but in a way that she can still move back and forth!) in a much more common structure. This self-sufficient beehive will keep the angel locked forever.</p>
+            <p>Another thing to take into consideration is the interaction between the rulesets of both games.
+                For instance, should the angel be considered as an "alive" cell when computing the next turn? If she is in the way of a cell that could be "born" (3 living neighbors), does she block it?
+                Because of her presence on the board, the angel must either be "constructive" (she is treated as a living cell) or "destructive" (she is considered to be an empty cell, but stands her ground,
+                blocking new cells from forming).
+            </p>
+            <p>There is a third option: the "killed" angel. If she lands on a square that will be set to "alive" on the next turn, she is wiped off of the board. However, with just a simple random algorithm for
+                the angel in this demonstration, I didn't find this way of play very interesting. In a real game setting, I'm not sure if it would be any more interesting either.
+            </p>
         </div>
     </div>
     <script src="js/main.js"></script> 
