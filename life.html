@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Conway's Dark Army</title>
+    <style>
+        canvas {
+            border: 1px solid #ccc;
+            cursor: crosshair;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" 
+    crossorigin="anonymous">
+</head>
+<body>
+    <div class="container my-5">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-5 text-center">
+                <h1 class="font-weight-bold p-2">Conway's Dark Army</h1>
+                <p><span class="text-primary">The Angel</span> moves 1 space in any direction. <span class="text-danger">The Devil</span> burns squares only by playing <i>Conway's Game of Life.</i></p>
+                <p class="font-weight-bold">Can the devil ever trap the angel?</p>
+                <div class="p-2">
+                    <button class="btn btn-primary" onclick="updateGrid()">Next Generation</button>
+                    <button class="btn btn-success" onclick="startSimulation()">Start</button>
+                    <button class="btn btn-warning" onclick="stopSimulation()">Stop</button>
+                    <button class="btn btn-danger" onclick="resetGrid()">Reset</button>
+                </div>
+                <hr>
+                <h2>Settings</h2>
+                <div class='justify-content-left'>
+                    <input type="checkbox" id="angel-corners-enable">
+                    <label for="angel-corners-enable">Angel can't "cut corners" (4 possible moves)</label><br>
+                    <input type="radio" name="angel-type" id="destructive" checked>
+                    <label for="destructive">Destructive Angel</label><br>
+                    <input type="radio" name="angel-type" id="constructive">
+                    <label for="constructive">Constructive Angel</label>
+                    <hr>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <canvas id="game-canvas"></canvas>
+            </div>
+        </div>
+        <div class="text-center">
+            <h2>Hints</h2>
+            <p>The devil can win. Very easily, in fact. If there is no restricted box set, the angel can be trapped in on all sides:</p>
+        </div>
+    </div>
+    <script src="js/main.js"></script> 
+</body>
+</html>
