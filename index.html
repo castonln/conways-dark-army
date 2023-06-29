@@ -48,7 +48,7 @@
             <p><a style="font-weight: bold;" href="https://en.wikipedia.org/wiki/Angel_problem" target="_blank">Conway's Angel Problem </a> - The angel can move a certain number of squares in any direction. The devil can block one square each time the angel moves.</p>
             <p><span style="font-weight: bold;">Conway's Dark Army - </span> The devil commands an army of squares which play the Game of Life. The angel must evade capture by moving only one square in any direction.</p>
             <hr>
-            <p>The devil can win. Very easily, in fact. If there are no restrictions as to where the devil may place his squares at the start of the game, the angel can be closed in on all sides.</p>
+            <p>The devil can win. Very easily, in fact. If there are no restrictions as to where the devil may place his squares at the start of the game or if the game can be won with just a single turn, the angel can be closed in on all sides.</p>
             <div class="row justify-content-center align-items-center m-2">
                 <div class="col-md-2">
                     <img src="img/ex2.png" class="border m-2">
@@ -66,26 +66,35 @@
             </div>
             <p>Of course, the angel would only step inside this sort of trap voluntarily (in this demonstration, it would be a 1/5 chance), and such a move only lasts for one turn.</p>
             <p>However, things get a bit more interesting when we restrict the angel from "cutting corners."</p>
-            <p>(The angel may only move to the green squares. The orange squares are only accessible when corners are cut.)</p>
             <div class="row justify-content-center align-items-center m-2">
                 <div class="col-md-2">
                     <img src="img/ex3.png" class="border m-2">
                 </div>
             </div>
+            <p>(The angel may only move to the green squares. The orange squares are only accessible when corners are cut.)</p>
             <div class="row justify-content-center align-items-center m-2">
                 <div class="col-md-2">
                     <img src="img/ex4.gif" class="border m-2">
                 </div>
             </div>
-            <p>Now the angel is trapped (but in a way that she can still move back and forth!) in a much more common structure. This self-sufficient beehive will keep the angel locked forever.</p>
+            <p>Now the angel is trapped (but in a way that she can still move back and forth!) in a much more common structure. This self-sufficient <a href="https://conwaylife.com/wiki/Beehive" target="_blank">beehive</a> will keep the angel locked forever.</p>
+            <p>So this trap, utilizing a <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life#Examples_of_patterns" target="_blank">frequently occuring still life</a> structure, can
+                theoretically trap an angel. Getting to this sort of state, however, is difficult with the randomly generated angel positions. I have yet to find a sort of
+                "still life superstructure trap" that could emerge from some starting cells and pose a real threat to the angel.</p>
             <p>Another thing to take into consideration is the interaction between the rulesets of both games.
                 For instance, should the angel be considered as an "alive" cell when computing the next turn? If she is in the way of a cell that could be "born" (3 living neighbors), does she block it?
                 Because of her presence on the board, the angel must either be "constructive" (she is treated as a living cell) or "destructive" (she is considered to be an empty cell, but stands her ground,
                 blocking new cells from forming).
             </p>
             <p>There is a third option: the "killed" angel. If she lands on a square that will be set to "alive" on the next turn, she is wiped off of the board. However, with just a simple random algorithm for
-                the angel in this demonstration, I didn't find this way of play very interesting. In a real game setting, I'm not sure if it would be any more interesting either.
+                the angel in this demonstration, I didn't find this way of play very interesting. In a real game setting, I'm not sure if it would be any more interesting either. You would be playing a game of
+                "who can intuitively guess Conway's Game of Life the best-est?"
             </p>
+            <p>The angel's interaction with the board poses another seemingly unanswerable question: if a "still life superstructure trap" exists, could it always be disarmed via an interaction with the angel?
+                In other words, since the angel always interacts with the burnt squares (constructively or destructively) she can interact with a trap before it can become a still life. Can she always escape 
+                before it activates?
+            </p>
+            <p>These questions are extremely vague and regard a game with a variety of uncontrollable, chaotic factors (the random angel algorithm only adds to the mess), but feel free to play around.</p>
         </div>
     </div>
     <script src="js/main.js"></script> 
